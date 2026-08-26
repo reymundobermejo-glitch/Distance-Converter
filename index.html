@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Distance Converter · km ↔ mi</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <main class="card" id="app">
+        <header class="header">
+          <div>
+            <p class="eyebrow">Unit converter</p>
+            <h1>Distance Converter</h1>
+            <p class="subtitle">Kilometers and miles, both ways</p>
+          </div>
+          <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
+            <span class="theme-icon" aria-hidden="true">🌙</span>
+            <span class="theme-label">Dark</span>
+          </button>
+        </header>
+
+        <label class="field-label" for="distanceInput">Distance</label>
+        <input
+          id="distanceInput"
+          class="distance-input"
+          type="text"
+          inputmode="decimal"
+          autocomplete="off"
+          placeholder="Enter a number"
+          aria-describedby="errorText formulaText"
+        />
+        <p class="error" id="errorText" hidden>Enter a valid number</p>
+
+        <div class="row direction-row">
+          <fieldset class="direction">
+            <legend class="visually-hidden">Conversion direction</legend>
+            <label>
+              <input type="radio" name="direction" value="km-to-mi" checked />
+              <span>🏃 km → 🚗 mi</span>
+            </label>
+            <label>
+              <input type="radio" name="direction" value="mi-to-km" />
+              <span>🚗 mi → 🏃 km</span>
+            </label>
+          </fieldset>
+          <button type="button" class="swap" id="swapBtn" title="Swap direction (Ctrl/Cmd+S)" aria-label="Swap conversion direction">
+            ⇄
+          </button>
+        </div>
+
+        <div class="row precision-row">
+          <label for="precision">Decimal places</label>
+          <input id="precision" type="range" min="0" max="6" value="2" />
+          <span id="precisionValue" class="precision-value">2</span>
+        </div>
+
+        <section class="result-panel" aria-live="polite">
+          <p class="result-label">Result</p>
+          <div class="result-line">
+            <span class="result-icon" id="resultIcon" aria-hidden="true">🚗</span>
+            <p class="result-value" id="resultValue">—</p>
+            <button type="button" class="copy" id="copyBtn" disabled>Copy</button>
+          </div>
+          <p class="formula" id="formulaText">× 0.621371</p>
+        </section>
+
+        <section>
+          <h2>Quick presets</h2>
+          <div class="presets" id="presets"></div>
+        </section>
+
+        <section>
+          <div class="history-head">
+            <h2>History</h2>
+            <button type="button" class="text-btn" id="clearHistory">Clear</button>
+          </div>
+          <ul class="history" id="history"></ul>
+        </section>
+
+        <p class="hint">Tip: Ctrl/Cmd+S swaps direction. Focus the input to replace the number instantly.</p>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
