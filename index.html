@@ -3,85 +3,133 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Distance Converter · km ↔ mi</title>
+    <meta name="description" content="Precision kilometer and mile converter." />
+    <title>Distance Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page">
-      <main class="card" id="app">
-        <header class="header">
+    <div class="env" aria-hidden="true">
+      <div class="env-grid"></div>
+      <div class="env-arc env-arc-a"></div>
+      <div class="env-arc env-arc-b"></div>
+      <div class="env-marks">SYS 01 · CALIBRATION ORIGIN</div>
+    </div>
+
+    <div class="shell">
+      <header class="identity">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2" />
+            <path d="M8 20h8M24 20h8" stroke="var(--signal-blue)" stroke-width="1.6" />
+            <path d="M8 20h8M24 20h8" stroke="var(--signal-lime)" stroke-width="1.6" transform="rotate(180 20 20)" opacity="0.85" />
+            <path d="M14 14h12v12H14z" fill="none" stroke="currentColor" stroke-width="1.4" />
+            <circle cx="20" cy="20" r="3.2" fill="var(--signal-blue)" />
+          </svg>
           <div>
-            <p class="eyebrow">Unit converter</p>
-            <h1>Distance Converter</h1>
-            <p class="subtitle">Kilometers and miles, both ways</p>
+            <p class="brand-name">Distance Converter</p>
+            <p class="brand-meta">Precision measurement instrument</p>
           </div>
-          <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
-            <span class="theme-icon" aria-hidden="true">🌙</span>
-            <span class="theme-label">Dark</span>
-          </button>
-        </header>
-
-        <label class="field-label" for="distanceInput">Distance</label>
-        <input
-          id="distanceInput"
-          class="distance-input"
-          type="text"
-          inputmode="decimal"
-          autocomplete="off"
-          placeholder="Enter a number"
-          aria-describedby="errorText formulaText"
-        />
-        <p class="error" id="errorText" hidden>Enter a valid number</p>
-
-        <div class="row direction-row">
-          <fieldset class="direction">
-            <legend class="visually-hidden">Conversion direction</legend>
-            <label>
-              <input type="radio" name="direction" value="km-to-mi" checked />
-              <span>🏃 km → 🚗 mi</span>
-            </label>
-            <label>
-              <input type="radio" name="direction" value="mi-to-km" />
-              <span>🚗 mi → 🏃 km</span>
-            </label>
-          </fieldset>
-          <button type="button" class="swap" id="swapBtn" title="Swap direction (Ctrl/Cmd+S)" aria-label="Swap conversion direction">
-            ⇄
-          </button>
         </div>
-
-        <div class="row precision-row">
-          <label for="precision">Decimal places</label>
-          <input id="precision" type="range" min="0" max="6" value="2" />
-          <span id="precisionValue" class="precision-value">2</span>
-        </div>
-
-        <section class="result-panel" aria-live="polite">
-          <p class="result-label">Result</p>
-          <div class="result-line">
-            <span class="result-icon" id="resultIcon" aria-hidden="true">🚗</span>
-            <p class="result-value" id="resultValue">—</p>
-            <button type="button" class="copy" id="copyBtn" disabled>Copy</button>
+        <div class="identity-tools">
+          <div class="precision" role="group" aria-labelledby="precisionLabel">
+            <span id="precisionLabel">Precision</span>
+            <div class="precision-seg" id="precisionGroup"></div>
           </div>
-          <p class="formula" id="formulaText">× 0.621371</p>
+          <div class="theme" role="group" aria-label="Color theme">
+            <button type="button" id="themeLight" class="theme-btn" data-theme-value="light">Light</button>
+            <button type="button" id="themeDark" class="theme-btn" data-theme-value="dark">Dark</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="slab" id="app">
+        <section class="instrument" id="instrument" aria-label="Kilometer and mile converter">
+          <article class="port port-source" id="sourcePort">
+            <p class="port-kicker">Source</p>
+            <p class="port-unit" id="sourceUnit">Kilometers</p>
+            <label class="visually-hidden" for="distanceInput">Source distance</label>
+            <input
+              id="distanceInput"
+              class="port-value source-value"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder="—"
+              aria-describedby="errorText formulaText"
+            />
+            <p class="port-system" id="sourceSystem">km · metric system</p>
+          </article>
+
+          <div class="rail-assembly">
+            <div class="scale" id="scale" aria-hidden="true"></div>
+            <div class="rail" id="rail">
+              <span class="rail-fill rail-fill-blue"></span>
+              <span class="rail-fill rail-fill-lime"></span>
+              <span class="rail-packet"></span>
+              <div class="artifact" id="artifact">
+                <span class="artifact-brace artifact-brace-a"></span>
+                <span class="artifact-brace artifact-brace-b"></span>
+                <span class="artifact-ring"></span>
+                <span class="artifact-core"></span>
+                <span class="artifact-lock"></span>
+              </div>
+            </div>
+            <p class="formula" id="formulaText">× 0.621371192</p>
+          </div>
+
+          <article class="port port-result" id="resultPort">
+            <p class="port-kicker">Result</p>
+            <p class="port-unit" id="resultUnit">Miles</p>
+            <p class="port-value result-value" id="resultValue" aria-live="polite">—</p>
+            <p class="port-system" id="resultSystem">mi · imperial system</p>
+          </article>
+
+          <div class="actions">
+            <button type="button" class="icon-btn" id="swapBtn" aria-label="Swap source and result units">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 8h11M15 5l3 3-3 3M17 16H6M9 13l-3 3 3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button type="button" class="icon-btn" id="copyBtn" aria-label="Copy result" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="8" y="8" width="11" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7" />
+                <path d="M6 16V5h9" fill="none" stroke="currentColor" stroke-width="1.7" />
+              </svg>
+            </button>
+            <button type="button" class="icon-btn" id="historyToggle" aria-label="Open history" aria-expanded="false" aria-controls="historyDrawer">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="13" r="7" fill="none" stroke="currentColor" stroke-width="1.7" />
+                <path d="M12 10v3.5l2.2 1.4M9 5h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              </svg>
+              <span class="visually-hidden">History</span>
+            </button>
+          </div>
         </section>
 
-        <section>
-          <h2>Quick presets</h2>
+        <p class="error" id="errorText" hidden>Enter a valid distance.</p>
+        <p class="copy-readout" id="copyReadout" aria-live="polite" hidden>Copied</p>
+
+        <section class="presets-block">
+          <button type="button" class="presets-toggle" id="presetsToggle" aria-expanded="true" aria-controls="presets">
+            Common presets
+          </button>
           <div class="presets" id="presets"></div>
         </section>
-
-        <section>
-          <div class="history-head">
-            <h2>History</h2>
-            <button type="button" class="text-btn" id="clearHistory">Clear</button>
-          </div>
-          <ul class="history" id="history"></ul>
-        </section>
-
-        <p class="hint">Tip: Ctrl/Cmd+S swaps direction. Focus the input to replace the number instantly.</p>
       </main>
     </div>
+
+    <aside class="history-drawer" id="historyDrawer" hidden>
+      <div class="history-head">
+        <h2>History</h2>
+        <button type="button" class="text-btn" id="clearHistory">Clear history</button>
+      </div>
+      <ul class="history" id="history"></ul>
+    </aside>
+    <div class="scrim" id="scrim" hidden></div>
+
     <script src="app.js"></script>
   </body>
 </html>
